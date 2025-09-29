@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Listening Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+    h1 {
+      color: #333;
+    }
+    audio {
+      display: none; /* Ẩn thanh điều khiển */
+    }
+  </style>
+</head>
+<body>
+  <h1>Bài nghe Listening Test</h1>
+  <p>Âm thanh sẽ tự động phát, không thể dừng hoặc tua lại.</p>
+
+  <audio id="audio" autoplay>
+    <source src=""C:\Users\johns\Documents\Cao Trí\iSEE\TOEIC\Đề các năm - ETS\TEST đầu vào\AUDIO (TEST ĐẦU VÀO TOEIC).mp3"" type="audio/mpeg">
+    Trình duyệt của bạn không hỗ trợ audio.
+  </audio>
+
+  <script>
+    const audio = document.getElementById("audio");
+
+    // Chặn chuột phải
+    document.addEventListener("contextmenu", e => e.preventDefault());
+
+    // Nếu cố pause → tự play lại
+    audio.addEventListener("pause", () => {
+      audio.play();
+    });
+
+    // Nếu cố tua → nhảy lại
+    let lastTime = 0;
+    setInterval(() => {
+      if (Math.abs(audio.currentTime - lastTime) > 0.5) {
+        audio.currentTime = lastTime;
+      }
+      lastTime = audio.currentTime;
+    }, 200);
+  </script>
+</body>
+</html>
