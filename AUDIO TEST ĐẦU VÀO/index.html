@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Bài thi nghe</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h2 {
+      font-size: 40px;
+      margin-bottom: 50px;
+    }
+    button {
+      padding: 20px 50px;
+      font-size: 30px;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Bài thi nghe</h2>
+  <button id="playBtn">▶ Play</button>
+  <audio id="audio" src="AUDIO-DAUVAO.mp3"></audio>
+
+  <script>
+    const playBtn = document.getElementById("playBtn");
+    const audio = document.getElementById("audio");
+    let isPlaying = false;
+
+    // Khi bấm nút Play
+    playBtn.addEventListener("click", () => {
+      if (!isPlaying) {
+        audio.play().catch(err => {
+          console.log("Không phát được audio:", err);
+        });
+        isPlaying = true;
+        playBtn.disabled = true; // Tắt nút play sau khi phát
+      }
+    });
+
+    // Không cho pause
+    audio.addEventListener("pause", () => {
+      if (!audio.ended) {
+        audio.play();
+      }
+    });
+
+    // Cảnh báo khi thoát trang
+    window.addEventListener("beforeunload", function (e) {
+      if (isPlaying && !audio.ended) {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    });
+  </script>
+</body>
+</html>
